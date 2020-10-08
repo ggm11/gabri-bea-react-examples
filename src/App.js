@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {Edit} from '@styled-icons/material/Edit';
+import IconButton from './components/IconButton';
+import TextField from './components/TextField';
 
 function App() {
+  const [textValue, setTextValue] = useState('');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const fd = new FormData(event.target);
+    console.log(Object.fromEntries(fd.entries()));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleSubmit} autoComplete='off'>
+        <TextField
+          label='todo'
+          name='todo'
+          value={textValue}
+          onChange={(event) => {
+            // console.log(event.target.value)
+            setTextValue(event.target.value)
+          }}
+        />
+      </form>
+      <IconButton>
+        <Edit />
+      </IconButton>
     </div>
   );
 }
